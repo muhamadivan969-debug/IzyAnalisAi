@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Bell, User, Crown, Settings, LogOut, HelpCircle, RefreshCw } from 'lucide-react';
+import { Bell, Crown, Settings, LogOut, HelpCircle, RefreshCw, User } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Header() {
@@ -36,13 +36,13 @@ export default function Header() {
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="w-8 h-8 rounded-full bg-[#00c2ff]/20 border border-[#00c2ff]/30 flex items-center justify-center text-[#00c2ff] font-bold text-sm"
+              className="w-8 h-8 rounded-full bg-gradient-to-br from-[#00c2ff] to-[#00d26a] flex items-center justify-center text-[#05070d] font-bold text-sm"
             >
               T
             </button>
 
             {dropdownOpen && (
-              <div className="absolute right-0 top-12 w-64 bg-[#0a0e1a] border border-[#162035] rounded-xl shadow-2xl overflow-hidden animate-fadeIn">
+              <div className="absolute right-0 top-12 w-64 bg-[#0a0e1a] border border-[#162035] rounded-xl shadow-2xl overflow-hidden">
                 <div className="p-4 border-b border-[#162035]">
                   <p className="font-semibold text-white">Trader IzyAnalisaAI</p>
                   <span className="text-xs text-gray-400 bg-[#00c2ff]/10 px-2 py-0.5 rounded-full">Akun Gratis</span>
