@@ -26,8 +26,8 @@ export async function GET() {
       return null;
     }));
 
-    const validMovers = movers.filter(s => s !== null);
-    validMovers.sort((a, b) => b.change - a.change);
+    const validMovers = movers.filter((s): s is NonNullable<typeof s> => s !== null);
+    validMovers.sort((a, b) => (b?.change ?? 0) - (a?.change ?? 0));
 
     return NextResponse.json({
       success: true,
