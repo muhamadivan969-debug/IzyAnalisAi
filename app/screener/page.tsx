@@ -39,7 +39,7 @@ export default function ScreenerPage() {
   return (
     <>
       <Particles />
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4 pb-6 relative z-10">
+      <div className="relative z-10 space-y-4 pb-6">
         <h2 className="text-xl font-bold text-white glow-text">Screener Saham</h2>
 
         <div className="relative">
@@ -59,11 +59,12 @@ export default function ScreenerPage() {
         ) : filtered.length === 0 ? (
           <Card><p className="text-center text-gray-400 py-8">🔍 Saham tidak ditemukan</p></Card>
         ) : (
-          filtered.map((s: any) => (
+          filtered.map((s: any, i) => (
             <motion.div
               key={s.kode}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.02 }}
               onClick={() => router.push(`/stock/${s.kode}`)}
               className="glass-card p-4 flex justify-between items-center cursor-pointer hover:border-[#00c2ff]/30 transition"
             >
@@ -80,7 +81,7 @@ export default function ScreenerPage() {
             </motion.div>
           ))
         )}
-      </motion.div>
+      </div>
     </>
   );
 }
