@@ -8,6 +8,11 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   generateEtags: false,
+  productionBrowserSourceMaps: false,
+  optimizeFonts: true,
+  experimental: {
+    optimizeCss: true,
+  },
 };
 
 export default nextConfig;
