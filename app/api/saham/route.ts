@@ -1,54 +1,12 @@
 import { NextResponse } from 'next/server';
 
-export async function GET(request: Request) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const kode = searchParams.get('kode');
-
-    const fetchStock = async (symbol: string) => {
-      const url = `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}`;
-      const res = await fetch(url);
-      const data = await res.json();
-      
-      if (data?.chart?.result?.[0]) {
-        const meta = data.chart.result[0].meta;
-        const quote = data.chart.result[0].indicators.quote[0];
-        const lastIndex = quote.close.length - 1;
-        
-        return {
-          kode: symbol.replace('.JK', ''),
-          name: meta.symbol || symbol,
-          close: quote.close[lastIndex] || 0,
-          changePercent: quote.close[lastIndex] && quote.open[0] 
-            ? ((quote.close[lastIndex] - quote.open[0]) / quote.open[0]) * 100 
-            : 0,
-          volume: quote.volume[lastIndex] || 0,
-          avgVolume: meta.averageDailyVolume || 1000000,
-        };
-      }
-      return null;
-    };
-
-    if (kode) {
-      const symbol = kode.toUpperCase().includes('.JK') ? kode.toUpperCase() : `${kode.toUpperCase()}.JK`;
-      const stock = await fetchStock(symbol);
-      
-      if (stock) {
-        return NextResponse.json({ success: true, data: stock });
-      }
-      return NextResponse.json({ success: false, error: 'Saham tidak ditemukan' }, { status: 404 });
-    }
-
-    const symbols = ['BBCA.JK', 'BBRI.JK', 'TLKM.JK', 'ASII.JK', 'UNVR.JK'];
-    const stocks = await Promise.all(symbols.map(fetchStock));
-    
-    return NextResponse.json({ success: true, data: stocks.filter(s => s !== null) });
-
-  } catch (error) {
-    console.error('Error:', error);
-    return NextResponse.json(
-      { success: false, error: 'Gagal ambil data' },
-      { status: 500 }
-    );
-  }
+export async function GET() {
+  return NextResponse.json({
+    success: true,
+    data: [
+      { kode: 'BBCA', name: 'Bank Central Asia', close: 10250, changePercent: 1.25 },
+      { kode: 'BBRI', name: 'Bank Rakyat Indonesia', close: 4850, changePercent: 0.75 },
+      { kode: 'TLKM', name: 'Telkom Indonesia', close: 3850, changePercent: -0.50 },
+    ]
+  });
 }
