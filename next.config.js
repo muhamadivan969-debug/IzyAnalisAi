@@ -10,11 +10,6 @@ const nextConfig = {
   generateEtags: false,
   productionBrowserSourceMaps: false,
   optimizeFonts: true,
-  experimental: {
-    optimizeCss: true,
-  },
-  // Tambahan biar lebih kecil
-  output: 'standalone',
 };
 
 export default nextConfig;
