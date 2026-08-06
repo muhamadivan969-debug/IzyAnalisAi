@@ -27,7 +27,7 @@ export default function WatchlistPage() {
   return (
     <>
       <Particles />
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4 pb-6 relative z-10">
+      <div className="relative z-10 space-y-4 pb-6">
         <h2 className="text-xl font-bold text-white glow-text flex items-center gap-2">
           <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
           Watchlist Favorit
@@ -55,7 +55,7 @@ export default function WatchlistPage() {
             </motion.div>
           ))
         )}
-      </motion.div>
+      </div>
     </>
   );
 }
