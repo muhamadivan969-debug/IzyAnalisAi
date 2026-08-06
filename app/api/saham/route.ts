@@ -23,6 +23,7 @@ export async function GET(request: Request) {
             ? ((quote.close[lastIndex] - quote.open[0]) / quote.open[0]) * 100 
             : 0,
           volume: quote.volume[lastIndex] || 0,
+          avgVolume: meta.averageDailyVolume || 1000000,
         };
       }
       return null;
@@ -38,7 +39,6 @@ export async function GET(request: Request) {
       return NextResponse.json({ success: false, error: 'Saham tidak ditemukan' }, { status: 404 });
     }
 
-    // Default: ambil beberapa saham contoh
     const symbols = ['BBCA.JK', 'BBRI.JK', 'TLKM.JK', 'ASII.JK', 'UNVR.JK'];
     const stocks = await Promise.all(symbols.map(fetchStock));
     
