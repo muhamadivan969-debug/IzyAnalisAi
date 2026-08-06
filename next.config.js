@@ -13,6 +13,8 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
   },
+  // Tambahan biar lebih kecil
+  output: 'standalone',
 };
 
 export default nextConfig;
