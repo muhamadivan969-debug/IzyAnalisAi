@@ -26,7 +26,7 @@ export default function ProfilePage() {
   return (
     <>
       <Particles />
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4 pb-6 relative z-10">
+      <div className="relative z-10 space-y-4 pb-6">
         <div className="glass-card p-4 flex items-center gap-4">
           <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#00c2ff] to-[#00d26a] flex items-center justify-center text-2xl font-bold text-[#05070d]">
             T
@@ -45,16 +45,16 @@ export default function ProfilePage() {
         </div>
 
         <div className="grid grid-cols-3 gap-2">
-          <Card className="text-center">
-            <p className="text-xs text-gray-400">Saham</p>
+          <Card className="text-center p-3">
+            <p className="text-[10px] text-gray-400">Saham</p>
             <p className="text-sm font-bold text-white">12</p>
           </Card>
-          <Card className="text-center">
-            <p className="text-xs text-gray-400">Sinyal</p>
+          <Card className="text-center p-3">
+            <p className="text-[10px] text-gray-400">Sinyal</p>
             <p className="text-sm font-bold text-[#00c2ff]">7</p>
           </Card>
-          <Card className="text-center">
-            <p className="text-xs text-gray-400">Analisis</p>
+          <Card className="text-center p-3">
+            <p className="text-[10px] text-gray-400">Analisis</p>
             <p className="text-sm font-bold text-[#00d26a]">24</p>
           </Card>
         </div>
@@ -83,7 +83,7 @@ export default function ProfilePage() {
         </button>
 
         <p className="text-center text-xs text-gray-500">IzyAnalisaAI v2.0 • 2026</p>
-      </motion.div>
+      </div>
     </>
   );
 }
