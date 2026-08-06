@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Search, Tv, Bookmark, User } from 'lucide-react';
+import { Home, Search, Tv, Bookmark, User, Zap, Flame, Bot } from 'lucide-react';
 
 const navItems = [
   { icon: Home, label: 'Home', href: '/' },
   { icon: Search, label: 'Analisa', href: '/screener' },
-  { icon: Tv, label: 'Sinyal', href: '/signal' },
+  { icon: Zap, label: 'Signal', href: '/signal' },
   { icon: Bookmark, label: 'Watchlist', href: '/watchlist' },
   { icon: User, label: 'Profil', href: '/profile' },
 ];
