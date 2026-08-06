@@ -68,7 +68,7 @@ export default function SectorBottomSheet({ name, onClose }: { name: string; onC
           </div>
 
           <div className="p-4 border-t border-[#162035]">
-            <button className="w-full btn-primary flex items-center justify-center gap-2">
+            <button className="w-full bg-[#00c2ff] text-[#05070d] font-bold py-3 rounded-xl flex items-center justify-center gap-2">
               <Zap className="w-4 h-4" />
               Analisa Sektor dengan AI
             </button>
