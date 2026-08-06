@@ -36,7 +36,7 @@ export default function StockDetail() {
     return (
       <>
         <Particles />
-        <div className="space-y-4">
+        <div className="space-y-4 relative z-10">
           <Skeleton className="h-12 w-full" />
           <Skeleton className="h-32 w-full" />
           <Skeleton className="h-64 w-full" />
@@ -130,7 +130,7 @@ export default function StockDetail() {
                   {isPositive ? 'BULLISH' : 'BEARISH'}
                 </span>
               </div>
-              <button className="w-full btn-primary flex items-center justify-center gap-2">
+              <button className="w-full bg-[#00c2ff] text-[#05070d] font-bold py-3 rounded-xl flex items-center justify-center gap-2">
                 <MessageCircle className="w-4 h-4" />
                 Tanya AI tentang {kode}
               </button>
