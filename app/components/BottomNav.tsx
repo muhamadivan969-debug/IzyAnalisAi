@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Search, Tv, Bookmark, User, Zap } from 'lucide-react';
+import { Home, Search, Zap, Bookmark, User } from 'lucide-react';
 
 const navItems = [
   { icon: Home, label: 'Home', href: '/' },
-  { icon: Search, label: 'Analisa', href: '/screener' },
+  { icon: Search, label: 'Screener', href: '/screener' },
   { icon: Zap, label: 'Signal', href: '/signal' },
   { icon: Bookmark, label: 'Watchlist', href: '/watchlist' },
   { icon: User, label: 'Profil', href: '/profile' },
@@ -24,12 +24,12 @@ export default function BottomNav() {
             <Link
               key={href}
               href={href}
-              className={`flex flex-col items-center gap-0 transition ${
-                isActive ? 'text-[#00c2ff]' : 'text-gray-500'
+              className={`flex flex-col items-center gap-0.5 transition ${
+                isActive ? 'text-cyan' : 'text-gray-500'
               }`}
             >
-              <Icon className={`w-4 h-4 ${isActive ? 'text-[#00c2ff]' : 'text-gray-500'}`} />
-              <span className={`text-[8px] ${isActive ? 'text-[#00c2ff]' : 'text-gray-500'}`}>
+              <Icon className={`w-4 h-4 ${isActive ? 'text-cyan' : 'text-gray-500'}`} />
+              <span className={`text-[9px] ${isActive ? 'text-cyan' : 'text-gray-500'}`}>
                 {label}
               </span>
             </Link>
