@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="id">
       <body className={inter.className}>
         <Header />
-        <main className="pb-20 pt-16 px-4 max-w-md mx-auto relative z-10">
+        <main className="pb-20 pt-16 px-4 max-w-xl mx-auto relative z-10">
           {children}
         </main>
         <BottomNav />
