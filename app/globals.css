@@ -24,34 +24,64 @@ body {
   font-size: 16px;
   line-height: 1.6;
   min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
 }
 
 main {
-  max-width: 600px;
+  max-width: 480px;
   margin: 0 auto;
-  padding: 16px 16px 100px;
+  padding: 12px 12px 100px;
 }
 
-h1, h2, h3, h4 {
+h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+h2 {
+  font-size: 1.2rem;
   font-weight: 600;
-  color: #ffffff;
 }
-
-h1 { font-size: 1.8rem; }
-h2 { font-size: 1.5rem; }
-h3 { font-size: 1.2rem; }
-h4 { font-size: 1rem; }
+h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
 
 p, span, button, input {
-  font-size: 1rem;
+  font-size: 0.95rem;
+}
+
+.text-3xl {
+  font-size: 1.5rem !important;
+}
+.text-4xl {
+  font-size: 1.8rem !important;
+}
+.text-2xl {
+  font-size: 1.3rem !important;
+}
+.text-xl {
+  font-size: 1.1rem !important;
+}
+.text-sm {
+  font-size: 0.85rem !important;
+}
+.text-xs {
+  font-size: 0.7rem !important;
 }
 
 .glass-card {
-  background: rgba(10, 14, 26, 0.8);
+  background: rgba(10, 14, 26, 0.85);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 16px;
-  padding: 16px;
+  border-radius: 14px;
+  padding: 14px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
   transition: all 0.3s ease;
 }
@@ -67,44 +97,84 @@ button {
   font-weight: 600;
   border: none;
   cursor: pointer;
+  font-size: 0.9rem;
 }
 
 input {
-  padding: 12px 16px;
+  padding: 10px 14px;
   border-radius: 12px;
   background: #0a0e1a;
   border: 1px solid #162035;
   color: white;
   width: 100%;
+  font-size: 0.95rem;
 }
 
+input:focus {
+  outline: none;
+  border-color: #00c2ff;
+}
+
+/* Grid gap untuk HP */
+.grid-cols-2 {
+  gap: 8px !important;
+}
+.grid-cols-3 {
+  gap: 6px !important;
+}
+
+/* Padding */
+.px-4 {
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+.p-4 {
+  padding: 12px !important;
+}
+.p-3 {
+  padding: 10px !important;
+}
+
+/* Warna */
 .text-muted {
   color: #8a8a8a;
-  font-size: 0.85rem;
 }
-
-.text-green { color: #00d26a; }
-.text-red { color: #ff4d5a; }
-.text-cyan { color: #00c2ff; }
+.text-green {
+  color: #00d26a;
+}
+.text-red {
+  color: #ff4d5a;
+}
+.text-cyan {
+  color: #00c2ff;
+}
 
 .badge-green {
   background: rgba(0, 210, 106, 0.15);
   color: #00d26a;
   padding: 2px 10px;
   border-radius: 20px;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 600;
 }
-
 .badge-red {
   background: rgba(255, 77, 90, 0.15);
   color: #ff4d5a;
   padding: 2px 10px;
   border-radius: 20px;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+}
+.badge-cyan {
+  background: rgba(0, 194, 255, 0.15);
+  color: #00c2ff;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.65rem;
   font-weight: 600;
 }
 
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 4px;
 }
@@ -114,4 +184,13 @@ input {
 ::-webkit-scrollbar-thumb {
   background: #00c2ff;
   border-radius: 10px;
+}
+
+/* Animasi Pulse */
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+.animate-pulse {
+  animation: pulse 1.5s ease-in-out infinite;
 }
