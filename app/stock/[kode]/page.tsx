@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Star, MessageCircle } from 'lucide-react';
-import Particles from '@/components/Particles';
 import Card from '@/components/Card';
 import Skeleton from '@/components/Skeleton';
+import Particles from '@/components/Particles';
 import { showToast } from '@/components/Toast';
 
 export default function StockDetail() {
@@ -36,7 +36,7 @@ export default function StockDetail() {
     return (
       <>
         <Particles />
-        <div className="space-y-4 relative z-10">
+        <div className="relative z-10 space-y-4">
           <Skeleton className="h-12 w-full" />
           <Skeleton className="h-32 w-full" />
           <Skeleton className="h-64 w-full" />
@@ -50,13 +50,17 @@ export default function StockDetail() {
   return (
     <>
       <Particles />
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4 pb-6 relative z-10">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="relative z-10 space-y-4 pb-4"
+      >
         <div className="flex items-center gap-3">
           <button onClick={() => router.back()} className="text-gray-400 hover:text-white">
             <ArrowLeft className="w-6 h-6" />
           </button>
           <div className="flex-1">
-            <h2 className="text-xl font-bold text-white glow-text">{stock?.kode}</h2>
+            <h2 className="text-xl font-bold">{stock?.kode}</h2>
             <p className="text-xs text-gray-400">{stock?.name}</p>
           </div>
           <button onClick={toggleWatchlist} className="p-2 hover:bg-[#162035] rounded-full transition">
@@ -67,14 +71,14 @@ export default function StockDetail() {
         <Card>
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-3xl font-bold text-white glow-text">Rp {Number(stock?.close || 0).toLocaleString()}</p>
+              <p className="text-3xl font-bold">Rp {Number(stock?.close || 0).toLocaleString()}</p>
               <span className={`text-sm font-bold ${isPositive ? 'text-[#00d26a]' : 'text-[#ff4d5a]'}`}>
                 {isPositive ? '+' : ''}{stock?.changePercent?.toFixed(2) || 0}%
               </span>
             </div>
             <div className="text-right">
               <p className="text-xs text-gray-400">Volume</p>
-              <p className="text-sm text-white">{Number(stock?.volume || 0).toLocaleString()}</p>
+              <p className="text-sm">{Number(stock?.volume || 0).toLocaleString()}</p>
             </div>
           </div>
         </Card>
