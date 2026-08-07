@@ -2,11 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Search, Zap, Bookmark, User } from 'lucide-react';
+import { Home, Search, Zap, Bookmark, User, Brain } from 'lucide-react';
 
 const navItems = [
   { icon: Home, label: 'Home', href: '/' },
   { icon: Search, label: 'Screener', href: '/screener' },
+  { icon: Brain, label: 'Predictor', href: '/predictor' },
   { icon: Zap, label: 'Signal', href: '/signal' },
   { icon: Bookmark, label: 'Watchlist', href: '/watchlist' },
   { icon: User, label: 'Profil', href: '/profile' },
@@ -29,7 +30,7 @@ export default function BottomNav() {
               }`}
             >
               <Icon className={`w-4 h-4 ${isActive ? 'text-cyan' : 'text-gray-500'}`} />
-              <span className={`text-[9px] ${isActive ? 'text-cyan' : 'text-gray-500'}`}>
+              <span className={`text-[8px] ${isActive ? 'text-cyan' : 'text-gray-500'}`}>
                 {label}
               </span>
             </Link>
