@@ -1,28 +1,49 @@
 import { NextResponse } from 'next/server';
-import { getMarketOverview, getTopGainers } from '@baguskto/saham';
 
 export async function GET() {
   try {
-    // Ambil IHSG
-    const market = await getMarketOverview();
-    const ihsg = {
-      close: market.index || 0,
-      changePercent: market.change || 0,
-    };
+    // Ambil IHSG dari Yahoo Finance
+    const resIHSG = await fetch('https://query1.finance.yahoo.com/v8/finance/chart/%5EJKSE');
+    const dataIHSG = await resIHSG.json();
 
-    // Ambil top gainers (5 saham dengan kenaikan tertinggi)
-    const topPicks = await getTopGainers(5);
+    let ihsg = { close: 0, changePercent: 0 };
+    if (dataIHSG?.chart?.result?.[0]) {
+      const quote = dataIHSG.chart.result[0].indicators.quote[0];
+      const lastIndex = quote.close.length - 1;
+      ihsg = {
+        close: quote.close[lastIndex] || 0,
+        changePercent: quote.close[lastIndex] && quote.open[0]
+          ? ((quote.close[lastIndex] - quote.open[0]) / quote.open[0]) * 100
+          : 0,
+      };
+    }
+
+    // Top 5 saham dari Yahoo Finance
+    const topSymbols = ['BBCA.JK', 'BBRI.JK', 'TLKM.JK', 'BMRI.JK', 'ASII.JK'];
+    const topPicks = await Promise.all(topSymbols.map(async (symbol) => {
+      const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${symbol}`);
+      const data = await res.json();
+      if (data?.chart?.result?.[0]) {
+        const quote = data.chart.result[0].indicators.quote[0];
+        const meta = data.chart.result[0].meta;
+        const lastIndex = quote.close.length - 1;
+        return {
+          kode: symbol.replace('.JK', ''),
+          name: meta.symbol || symbol,
+          close: quote.close[lastIndex] || 0,
+          changePercent: quote.close[lastIndex] && quote.open[0]
+            ? ((quote.close[lastIndex] - quote.open[0]) / quote.open[0]) * 100
+            : 0,
+        };
+      }
+      return null;
+    }));
 
     return NextResponse.json({
       success: true,
       data: {
         ihsg,
-        topPicks: topPicks.map((s: any) => ({
-          kode: s.symbol,
-          name: s.name,
-          close: s.price || 0,
-          changePercent: s.change || 0,
-        })),
+        topPicks: topPicks.filter(s => s !== null),
       },
     });
 
