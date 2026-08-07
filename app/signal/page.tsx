@@ -1,28 +1,49 @@
 import { NextResponse } from 'next/server';
-import { getAvailableStocks } from '@baguskto/saham';
 
 export async function GET() {
   try {
-    const allStocks = await getAvailableStocks();
-    
-    // Filter saham dengan volume tinggi
-    const signals = allStocks
-      .filter((s: any) => (s.volume || 0) > 1000000)
-      .slice(0, 5)
-      .map((s: any) => ({
-        kode: s.symbol,
-        harga: s.price || 0,
-        change: s.change || 0,
-        volumeRatio: (s.volume || 0) / 1000000,
-        isSignal: true,
-        timestamp: new Date().toISOString(),
-      }));
+    // Ambil semua saham IDX
+    const searchRes = await fetch('https://query1.finance.yahoo.com/v1/finance/search?q=IDX&quotesCount=1000');
+    const searchData = await searchRes.json();
+    const allSymbols = searchData.quotes
+      .filter((q: any) => q.symbol?.endsWith('.JK'))
+      .map((q: any) => q.symbol)
+      .slice(0, 20);
+
+    const signals = await Promise.all(allSymbols.map(async (symbol: string) => {
+      const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${symbol}`);
+      const data = await res.json();
+      
+      if (data?.chart?.result?.[0]) {
+        const quote = data.chart.result[0].indicators.quote[0];
+        const meta = data.chart.result[0].meta;
+        const lastIndex = quote.close.length - 1;
+        const volume = quote.volume[lastIndex] || 0;
+        const avgVolume = meta.averageDailyVolume || 1000000;
+        const volumeRatio = volume / avgVolume;
+
+        return {
+          kode: symbol.replace('.JK', ''),
+          harga: quote.close[lastIndex] || 0,
+          change: quote.close[lastIndex] && quote.open[0]
+            ? ((quote.close[lastIndex] - quote.open[0]) / quote.open[0]) * 100
+            : 0,
+          volumeRatio,
+          isSignal: volumeRatio > 20,
+          timestamp: new Date().toISOString(),
+        };
+      }
+      return null;
+    }));
+
+    const validSignals = signals.filter(s => s !== null);
+    const newSignals = validSignals.filter(s => s.isSignal);
 
     return NextResponse.json({
       success: true,
       data: {
-        signals,
-        all: allStocks.slice(0, 10),
+        signals: newSignals,
+        all: validSignals,
         timestamp: new Date().toISOString(),
       },
     });
