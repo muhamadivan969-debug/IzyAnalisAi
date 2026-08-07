@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 
-// ✅ TAMBAHKAN INI BIAR DINAMIS (GA DIPAKSA STATIS)
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
@@ -8,6 +7,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const kode = searchParams.get('kode');
 
+    // DAFTAR SAHAM (bisa ditambah sampe 900+)
     const symbols = [
       'BBCA.JK', 'BBRI.JK', 'TLKM.JK', 'BMRI.JK', 'ASII.JK',
       'ADRO.JK', 'TPIA.JK', 'UNVR.JK', 'GOTO.JK', 'BRIS.JK',
@@ -16,22 +16,27 @@ export async function GET(request: Request) {
 
     if (!kode) {
       const stocks = await Promise.all(symbols.map(async (symbol) => {
-        const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${symbol}`);
-        const data = await res.json();
-        if (data?.chart?.result?.[0]) {
-          const quote = data.chart.result[0].indicators.quote[0];
-          const meta = data.chart.result[0].meta;
-          const lastIndex = quote.close.length - 1;
-          return {
-            kode: symbol.replace('.JK', ''),
-            name: meta.symbol || symbol,
-            close: quote.close[lastIndex] || 0,
-            changePercent: quote.close[lastIndex] && quote.open[0]
-              ? ((quote.close[lastIndex] - quote.open[0]) / quote.open[0]) * 100
-              : 0,
-          };
+        try {
+          const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${symbol}`);
+          const data = await res.json();
+          if (data?.chart?.result?.[0]) {
+            const quote = data.chart.result[0].indicators.quote[0];
+            const meta = data.chart.result[0].meta;
+            const lastIndex = quote.close.length - 1;
+            return {
+              kode: symbol.replace('.JK', ''),
+              name: meta.symbol || symbol,
+              close: quote.close[lastIndex] || 0,
+              changePercent: quote.close[lastIndex] && quote.open[0]
+                ? ((quote.close[lastIndex] - quote.open[0]) / quote.open[0]) * 100
+                : 0,
+            };
+          }
+          return null;
+        } catch (err) {
+          console.error(`Error fetching ${symbol}:`, err);
+          return null;
         }
-        return null;
       }));
       return NextResponse.json({
         success: true,
