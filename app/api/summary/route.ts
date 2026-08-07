@@ -18,7 +18,7 @@ export async function GET() {
       };
     }
 
-    // Ambil top picks dari Yahoo Finance (BBCA, BBRI, TLKM)
+    // Ambil 3 saham top dari Yahoo
     const symbols = ['BBCA.JK', 'BBRI.JK', 'TLKM.JK'];
     const topPicks = await Promise.all(symbols.map(async (symbol) => {
       const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${symbol}`);
