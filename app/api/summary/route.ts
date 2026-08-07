@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const resIHSG = await fetch('https://query1.finance.yahoo.com/v8/finance/chart/%5EJKSE');
