@@ -2,13 +2,13 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    // Ambil IHSG dari Yahoo Finance
-    const res = await fetch('https://query1.finance.yahoo.com/v8/finance/chart/%5EJKSE');
-    const data = await res.json();
+    // IHSG
+    const resIHSG = await fetch('https://query1.finance.yahoo.com/v8/finance/chart/%5EJKSE');
+    const dataIHSG = await resIHSG.json();
 
     let ihsg = { close: 0, changePercent: 0 };
-    if (data?.chart?.result?.[0]) {
-      const quote = data.chart.result[0].indicators.quote[0];
+    if (dataIHSG?.chart?.result?.[0]) {
+      const quote = dataIHSG.chart.result[0].indicators.quote[0];
       const lastIndex = quote.close.length - 1;
       ihsg = {
         close: quote.close[lastIndex] || 0,
@@ -18,8 +18,8 @@ export async function GET() {
       };
     }
 
-    // Ambil 3 saham top dari Yahoo
-    const symbols = ['BBCA.JK', 'BBRI.JK', 'TLKM.JK'];
+    // Top 5 saham
+    const symbols = ['BBCA.JK', 'BBRI.JK', 'TLKM.JK', 'BMRI.JK', 'ASII.JK'];
     const topPicks = await Promise.all(symbols.map(async (symbol) => {
       const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${symbol}`);
       const data = await res.json();
