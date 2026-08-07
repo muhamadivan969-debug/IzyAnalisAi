@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    // Ambil IHSG dari Yahoo Finance
     const resIHSG = await fetch('https://query1.finance.yahoo.com/v8/finance/chart/%5EJKSE');
     const dataIHSG = await resIHSG.json();
 
@@ -18,7 +17,6 @@ export async function GET() {
       };
     }
 
-    // Top 5 saham dari Yahoo Finance
     const topSymbols = ['BBCA.JK', 'BBRI.JK', 'TLKM.JK', 'BMRI.JK', 'ASII.JK'];
     const topPicks = await Promise.all(topSymbols.map(async (symbol) => {
       const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${symbol}`);
