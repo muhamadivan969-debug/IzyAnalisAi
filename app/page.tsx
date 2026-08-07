@@ -42,14 +42,12 @@ export default function Home() {
     <>
       <Particles />
       
-      {/* ANIMASI HALAMAN */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="relative z-10 space-y-5 pb-4"
       >
-        {/* Welcome Section */}
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm text-gray-400 font-medium flex items-center gap-2">
@@ -73,7 +71,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* IHSG Card */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -131,7 +128,6 @@ export default function Home() {
           </Card>
         </motion.div>
 
-        {/* Stats Grid */}
         <div className="grid grid-cols-3 gap-2">
           <motion.div
             initial={{ y: 20, opacity: 0 }}
@@ -168,7 +164,6 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* Live Signals */}
         {signals.length > 0 && (
           <motion.div
             initial={{ y: 20, opacity: 0 }}
@@ -210,7 +205,6 @@ export default function Home() {
           </motion.div>
         )}
 
-        {/* Top Pick */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -240,7 +234,6 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Top Movers */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -273,4 +266,4 @@ export default function Home() {
       </motion.div>
     </>
   );
-        }
+}
