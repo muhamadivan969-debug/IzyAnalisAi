@@ -2,11 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import CountUp from 'react-countup';
 import { 
-  TrendingUp, TrendingDown, Zap, BarChart3, 
-  Sparkles, Crown, Activity, ArrowUpRight,
-  Flame, Bell, Eye
+  TrendingUp, TrendingDown, Zap, Sparkles, Crown, 
+  Bell, Flame, BarChart3, Activity, Eye
 } from 'lucide-react';
 import Particles from '@/components/Particles';
 import Card from '@/components/Card';
@@ -41,28 +39,28 @@ export default function Home() {
   return (
     <>
       <Particles />
-      
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
         className="relative z-10 space-y-5 pb-4"
       >
+        {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm text-gray-400 font-medium flex items-center gap-2">
+            <p className="text-sm text-gray-400 flex items-center gap-2">
               <Sparkles className="w-3 h-3 text-[#00c2ff]" />
               Selamat Datang
             </p>
-            <h2 className="text-3xl font-bold text-white flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
               Halo, Trader!
               <Crown className="w-4 h-4 text-yellow-400" />
             </h2>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <div className="flex items-center gap-1 text-xs bg-[#00d26a]/10 border border-[#00d26a]/20 px-3 py-1 rounded-full">
               <PulseDot />
-              <span className="text-[#00d26a] text-[10px]">Live</span>
+              <span className="text-[#00d26a] text-[10px] font-medium">Live</span>
             </div>
             <button className="p-2 hover:bg-[#162035] rounded-full transition relative">
               <Bell className="w-4 h-4 text-gray-400" />
@@ -71,16 +69,15 @@ export default function Home() {
           </div>
         </div>
 
+        {/* IHSG */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1 }}
         >
-          <Card className="relative overflow-hidden border-[#00c2ff]/10">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#00c2ff]/5 rounded-full blur-3xl" />
-            
-            <div className="flex justify-between items-start relative">
-              <div>
+          <Card className="border-[#00c2ff]/10">
+            <div className="flex justify-between items-start">
+              <div className="flex-1">
                 <p className="text-sm text-gray-400 font-medium flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#00c2ff] animate-pulse" />
                   IHSG
@@ -88,46 +85,45 @@ export default function Home() {
                 {ihsg.loading ? (
                   <Skeleton className="h-10 w-32" />
                 ) : (
-                  <div className="flex items-baseline gap-4">
-                    <span className="text-4xl font-extrabold tracking-tight">
-                      <CountUp end={ihsg.close} duration={2} separator="." />
+                  <div className="flex items-baseline gap-3">
+                    <span className="text-4xl font-extrabold tracking-tight text-white">
+                      {Number(ihsg.close).toLocaleString()}
                     </span>
                     <span className={`text-sm font-bold px-3 py-1 rounded-full ${
-                      isPositive ? 'bg-[#00d26a]/20 text-[#00d26a]' : 'bg-[#ff4d5a]/20 text-[#ff4d5a]'
+                      isPositive ? 'bg-[#00d26a]/15 text-[#00d26a]' : 'bg-[#ff4d5a]/15 text-[#ff4d5a]'
                     }`}>
                       {isPositive ? '↑ +' : '↓ '}{ihsg.changePercent.toFixed(2)}%
                     </span>
                   </div>
                 )}
               </div>
-              <div className="w-28">
-                <div className="h-12 flex items-end gap-0.5">
-                  {[20, 35, 25, 45, 30, 60, 40, 55, 35, 50, 65, 45].map((h, i) => (
-                    <div key={i} className="w-1.5 rounded-t transition-all" style={{
-                      height: `${h}%`,
-                      background: isPositive 
-                        ? `linear-gradient(to top, #00d26a, #00c2ff)` 
-                        : `linear-gradient(to top, #ff4d5a, #ff6b7a)`,
-                      opacity: 0.5 + (i / 12) * 0.5,
-                    }} />
-                  ))}
-                </div>
-                <div className="flex gap-1 mt-1">
-                  {['1D', '1W', '1M', '1Y'].map(tab => (
-                    <button key={tab} className={`px-2 py-0.5 text-[10px] rounded-full transition ${
-                      tab === '1D' 
-                        ? 'bg-[#00c2ff] text-[#05070d] font-bold' 
-                        : 'text-gray-500 hover:text-white hover:bg-[#162035]'
-                    }`}>
-                      {tab}
-                    </button>
-                  ))}
-                </div>
+              <div className="w-28 h-12 flex items-end gap-0.5">
+                {[20, 35, 25, 45, 30, 60, 40, 55, 35, 50, 65, 45].map((h, i) => (
+                  <div key={i} className="w-1.5 rounded-t" style={{
+                    height: `${h}%`,
+                    background: isPositive 
+                      ? `linear-gradient(to top, #00d26a, #00c2ff)` 
+                      : `linear-gradient(to top, #ff4d5a, #ff6b7a)`,
+                    opacity: 0.5 + (i / 12) * 0.5,
+                  }} />
+                ))}
               </div>
+            </div>
+            <div className="flex gap-2 mt-3">
+              {['1D', '1W', '1M', '1Y'].map(tab => (
+                <button key={tab} className={`px-3 py-1 text-xs rounded-full transition ${
+                  tab === '1D' 
+                    ? 'bg-[#00c2ff] text-[#05070d] font-bold' 
+                    : 'bg-[#162035] text-gray-400 hover:bg-[#00c2ff]/20 hover:text-white'
+                }`}>
+                  {tab}
+                </button>
+              ))}
             </div>
           </Card>
         </motion.div>
 
+        {/* Stats */}
         <div className="grid grid-cols-3 gap-2">
           <motion.div
             initial={{ y: 20, opacity: 0 }}
@@ -164,6 +160,7 @@ export default function Home() {
           </motion.div>
         </div>
 
+        {/* Live Signal */}
         {signals.length > 0 && (
           <motion.div
             initial={{ y: 20, opacity: 0 }}
@@ -205,6 +202,7 @@ export default function Home() {
           </motion.div>
         )}
 
+        {/* Top Pick */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -218,7 +216,9 @@ export default function Home() {
             {loading ? (
               Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-16 w-full" />)
             ) : topPicks.length === 0 ? (
-              <Card><p className="text-center text-gray-400 py-4 text-sm">Belum ada data</p></Card>
+              <Card className="text-center py-4">
+                <p className="text-gray-400 text-sm">Belum ada data</p>
+              </Card>
             ) : (
               topPicks.map((s: any, i) => (
                 <motion.div
@@ -234,6 +234,7 @@ export default function Home() {
           </div>
         </motion.div>
 
+        {/* Top Movers */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
