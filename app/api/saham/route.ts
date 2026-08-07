@@ -5,14 +5,15 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const kode = searchParams.get('kode');
 
-    const symbols = [
-      'BBCA.JK', 'BBRI.JK', 'TLKM.JK', 'BMRI.JK', 'ASII.JK',
-      'ADRO.JK', 'TPIA.JK', 'UNVR.JK', 'GOTO.JK', 'BRIS.JK',
-      'ANTM.JK', 'ICBP.JK', 'INDF.JK', 'CPIN.JK', 'PGAS.JK'
-    ];
+    // Ambil semua saham IDX dari Yahoo Finance
+    const searchRes = await fetch('https://query1.finance.yahoo.com/v1/finance/search?q=IDX&quotesCount=1000');
+    const searchData = await searchRes.json();
+    const allSymbols = searchData.quotes
+      .filter((q: any) => q.symbol?.endsWith('.JK'))
+      .map((q: any) => q.symbol);
 
     if (!kode) {
-      const stocks = await Promise.all(symbols.map(async (symbol) => {
+      const stocks = await Promise.all(allSymbols.slice(0, 50).map(async (symbol: string) => {
         const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${symbol}`);
         const data = await res.json();
         if (data?.chart?.result?.[0]) {
