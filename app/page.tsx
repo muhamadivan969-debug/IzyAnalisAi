@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import CountUp from 'react-countup';
 import { 
   TrendingUp, TrendingDown, Zap, BarChart3, 
   Sparkles, Crown, Activity, ArrowUpRight,
@@ -11,6 +12,7 @@ import Particles from '@/components/Particles';
 import Card from '@/components/Card';
 import Skeleton from '@/components/Skeleton';
 import StockRow from '@/components/StockRow';
+import PulseDot from '@/components/PulseDot';
 
 export default function Home() {
   const [ihsg, setIhsg] = useState({ loading: true, close: 0, changePercent: 0 });
@@ -39,22 +41,29 @@ export default function Home() {
   return (
     <>
       <Particles />
-      <div className="relative z-10 space-y-5 pb-4">
+      
+      {/* ANIMASI HALAMAN */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="relative z-10 space-y-5 pb-4"
+      >
         {/* Welcome Section */}
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs text-gray-400 font-medium flex items-center gap-2">
+            <p className="text-sm text-gray-400 font-medium flex items-center gap-2">
               <Sparkles className="w-3 h-3 text-[#00c2ff]" />
               Selamat Datang
             </p>
-            <h2 className="text-2xl font-bold text-white glow-text flex items-center gap-2">
+            <h2 className="text-3xl font-bold text-white flex items-center gap-2">
               Halo, Trader!
               <Crown className="w-4 h-4 text-yellow-400" />
             </h2>
           </div>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1 text-xs bg-[#00d26a]/10 border border-[#00d26a]/20 px-3 py-1 rounded-full">
-              <div className="pulse-dot w-1.5 h-1.5" />
+              <PulseDot />
               <span className="text-[#00d26a] text-[10px]">Live</span>
             </div>
             <button className="p-2 hover:bg-[#162035] rounded-full transition relative">
@@ -65,7 +74,11 @@ export default function Home() {
         </div>
 
         {/* IHSG Card */}
-        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.1 }}
+        >
           <Card className="relative overflow-hidden border-[#00c2ff]/10">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#00c2ff]/5 rounded-full blur-3xl" />
             
@@ -79,8 +92,8 @@ export default function Home() {
                   <Skeleton className="h-10 w-32" />
                 ) : (
                   <div className="flex items-baseline gap-4">
-                    <span className="text-4xl font-extrabold glow-text tracking-tight">
-                      {Number(ihsg.close).toLocaleString()}
+                    <span className="text-4xl font-extrabold tracking-tight">
+                      <CountUp end={ihsg.close} duration={2} separator="." />
                     </span>
                     <span className={`text-sm font-bold px-3 py-1 rounded-full ${
                       isPositive ? 'bg-[#00d26a]/20 text-[#00d26a]' : 'bg-[#ff4d5a]/20 text-[#ff4d5a]'
@@ -120,21 +133,33 @@ export default function Home() {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-3 gap-2">
-          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 }}>
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.15 }}
+          >
             <Card className="text-center p-3">
               <p className="text-[10px] text-gray-400 uppercase tracking-wider">Fear & Greed</p>
               <h3 className="text-xl font-extrabold text-[#00c2ff]">68</h3>
               <span className="text-[10px] text-[#00d26a]">Greedy</span>
             </Card>
           </motion.div>
-          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.15 }}>
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
             <Card className="text-center p-3">
               <p className="text-[10px] text-gray-400 uppercase tracking-wider">Win Rate</p>
               <h3 className="text-xl font-extrabold text-[#00d26a]">84%</h3>
               <span className="text-[10px] text-[#00c2ff]">High</span>
             </Card>
           </motion.div>
-          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }}>
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.25 }}
+          >
             <Card className="text-center p-3">
               <p className="text-[10px] text-gray-400 uppercase tracking-wider">Signal</p>
               <h3 className="text-xl font-extrabold text-yellow-400">{signals.length}</h3>
@@ -145,7 +170,11 @@ export default function Home() {
 
         {/* Live Signals */}
         {signals.length > 0 && (
-          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.25 }}>
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-bold text-white flex items-center gap-2">
                 <Zap className="w-4 h-4 text-yellow-400" />
@@ -154,8 +183,14 @@ export default function Home() {
               <button className="text-xs text-[#00c2ff] hover:underline">Lihat Semua</button>
             </div>
             <div className="space-y-2 mt-2">
-              {signals.map((s) => (
-                <div key={s.kode} className="glass-card p-3 flex justify-between items-center border-[#00c2ff]/20">
+              {signals.map((s, i) => (
+                <motion.div
+                  key={s.kode}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="glass-card p-3 flex justify-between items-center border-[#00c2ff]/20"
+                >
                   <div className="flex items-center gap-3">
                     <div className="w-1.5 h-1.5 bg-[#ff4d5a] rounded-full animate-pulse" />
                     <div>
@@ -169,14 +204,18 @@ export default function Home() {
                       {s.change >= 0 ? '+' : ''}{s.change.toFixed(2)}%
                     </span>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </motion.div>
         )}
 
         {/* Top Pick */}
-        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}>
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.35 }}
+        >
           <h3 className="text-sm font-bold text-white flex items-center gap-2">
             <Flame className="w-4 h-4 text-orange-400" />
             Top Pick AI
@@ -187,15 +226,26 @@ export default function Home() {
             ) : topPicks.length === 0 ? (
               <Card><p className="text-center text-gray-400 py-4 text-sm">Belum ada data</p></Card>
             ) : (
-              topPicks.map((s: any) => (
-                <StockRow key={s.kode} stock={s} onClick={() => {}} onToggle={() => {}} />
+              topPicks.map((s: any, i) => (
+                <motion.div
+                  key={s.kode}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                >
+                  <StockRow stock={s} onClick={() => {}} onToggle={() => {}} />
+                </motion.div>
               ))
             )}
           </div>
         </motion.div>
 
-        {/* Top Movers Preview */}
-        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.35 }}>
+        {/* Top Movers */}
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-bold text-white flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-[#00d26a]" />
@@ -205,16 +255,22 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-2 gap-2 mt-2">
             {['ALKA', 'DWGL', 'MSKY', 'VIVA'].map((kode, i) => (
-              <div key={kode} className="glass-card p-3 flex justify-between items-center">
+              <motion.div
+                key={kode}
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: i * 0.05 }}
+                className="glass-card p-3 flex justify-between items-center"
+              >
                 <span className="font-bold text-white text-sm">{kode}</span>
                 <span className="text-xs font-bold text-[#00d26a]">
                   {['+9.97%', '+9.63%', '+9.52%', '+9.43%'][i]}
                 </span>
-              </div>
+              </motion.div>
             ))}
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </>
   );
-}
+        }
