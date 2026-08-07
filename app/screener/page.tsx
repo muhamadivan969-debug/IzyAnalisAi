@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
-import Particles from '@/components/Particles';
 import Card from '@/components/Card';
 import Skeleton from '@/components/Skeleton';
+import Particles from '@/components/Particles';
 
 export default function ScreenerPage() {
   const router = useRouter();
@@ -29,7 +29,7 @@ export default function ScreenerPage() {
   }, []);
 
   useEffect(() => {
-    const result = stocks.filter(s => 
+    const result = stocks.filter(s =>
       s.kode.toLowerCase().includes(query.toLowerCase()) ||
       s.name?.toLowerCase().includes(query.toLowerCase())
     );
@@ -39,8 +39,12 @@ export default function ScreenerPage() {
   return (
     <>
       <Particles />
-      <div className="relative z-10 space-y-4 pb-6">
-        <h2 className="text-xl font-bold text-white glow-text">Screener Saham</h2>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="relative z-10 space-y-4 pb-4"
+      >
+        <h2 className="text-xl font-bold">Screener Saham</h2>
 
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
@@ -57,7 +61,7 @@ export default function ScreenerPage() {
         {loading ? (
           Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} className="h-14 w-full" />)
         ) : filtered.length === 0 ? (
-          <Card><p className="text-center text-gray-400 py-8">🔍 Saham tidak ditemukan</p></Card>
+          <Card className="text-center py-8 text-gray-400">🔍 Saham tidak ditemukan</Card>
         ) : (
           filtered.map((s: any, i) => (
             <motion.div
@@ -66,14 +70,14 @@ export default function ScreenerPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.02 }}
               onClick={() => router.push(`/stock/${s.kode}`)}
-              className="glass-card p-4 flex justify-between items-center cursor-pointer hover:border-[#00c2ff]/30 transition"
+              className="card p-4 flex justify-between items-center cursor-pointer hover:border-[#00c2ff]/30 transition"
             >
               <div>
-                <h4 className="font-bold text-white">{s.kode}</h4>
+                <h4 className="font-bold">{s.kode}</h4>
                 <p className="text-xs text-gray-400">{s.name || '-'}</p>
               </div>
               <div className="text-right">
-                <p className="text-sm font-bold text-white">Rp {Number(s.close || 0).toLocaleString()}</p>
+                <p className="text-sm font-bold">Rp {Number(s.close || 0).toLocaleString()}</p>
                 <span className={`text-xs font-bold ${s.changePercent >= 0 ? 'text-[#00d26a]' : 'text-[#ff4d5a]'}`}>
                   {s.changePercent >= 0 ? '+' : ''}{s.changePercent?.toFixed(2) || 0}%
                 </span>
@@ -81,7 +85,7 @@ export default function ScreenerPage() {
             </motion.div>
           ))
         )}
-      </div>
+      </motion.div>
     </>
   );
 }
