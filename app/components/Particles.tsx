@@ -8,7 +8,7 @@ export default function Particles() {
   useEffect(() => {
     if (!containerRef.current) return;
     const container = containerRef.current;
-    const count = 50;
+    const count = 30;
 
     for (let i = 0; i < count; i++) {
       const particle = document.createElement('div');
